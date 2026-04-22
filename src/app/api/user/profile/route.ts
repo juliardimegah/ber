@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/middleware";
-import { ok, notFound, serverError } from "@/lib/response";
+import { ok, badRequest, notFound, serverError } from "@/lib/response";
 
 export const runtime = "nodejs";
 
@@ -56,7 +56,7 @@ export async function PUT(request: NextRequest) {
 
     // Validasi minimal
     if (name !== undefined && (typeof name !== "string" || name.trim().length < 2)) {
-      return { error: "Nama tidak valid" }; // akan ditangani di bawah
+      return badRequest("Nama tidak valid");
     }
 
     const now = new Date().toISOString();
